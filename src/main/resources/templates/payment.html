@@ -1,333 +1,333 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Payment | PayPal Integration</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #003087;
-            --secondary-color: #009cde;
-            --accent-color: #ffc439;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
-            --border-radius: 8px;
-            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Secure Payment | PayPal Integration</title>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">-->
+<!--    <style>-->
+<!--        :root {-->
+<!--            &#45;&#45;primary-color: #003087;-->
+<!--            &#45;&#45;secondary-color: #009cde;-->
+<!--            &#45;&#45;accent-color: #ffc439;-->
+<!--            &#45;&#45;light-color: #f8f9fa;-->
+<!--            &#45;&#45;dark-color: #212529;-->
+<!--            &#45;&#45;success-color: #28a745;-->
+<!--            &#45;&#45;danger-color: #dc3545;-->
+<!--            &#45;&#45;border-radius: 8px;-->
+<!--            &#45;&#45;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);-->
+<!--            &#45;&#45;transition: all 0.3s ease;-->
+<!--        }-->
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--        }-->
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark-color);
-            line-height: 1.6;
-        }
+<!--        body {-->
+<!--            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;-->
+<!--            background-color: #f5f7fa;-->
+<!--            color: var(&#45;&#45;dark-color);-->
+<!--            line-height: 1.6;-->
+<!--        }-->
 
-        .container {
-            max-width: 500px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+<!--        .container {-->
+<!--            max-width: 500px;-->
+<!--            margin: 40px auto;-->
+<!--            padding: 0 20px;-->
+<!--        }-->
 
-        .payment-card {
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 30px;
-            margin-bottom: 30px;
-            transition: var(--transition);
-        }
+<!--        .payment-card {-->
+<!--            background: white;-->
+<!--            border-radius: var(&#45;&#45;border-radius);-->
+<!--            box-shadow: var(&#45;&#45;box-shadow);-->
+<!--            padding: 30px;-->
+<!--            margin-bottom: 30px;-->
+<!--            transition: var(&#45;&#45;transition);-->
+<!--        }-->
 
-        .payment-card:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
+<!--        .payment-card:hover {-->
+<!--            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);-->
+<!--        }-->
 
-        .payment-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+<!--        .payment-header {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 25px;-->
+<!--        }-->
 
-        .payment-header h2 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
+<!--        .payment-header h2 {-->
+<!--            color: var(&#45;&#45;primary-color);-->
+<!--            margin-bottom: 10px;-->
+<!--            font-weight: 600;-->
+<!--        }-->
 
-        .payment-header p {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
+<!--        .payment-header p {-->
+<!--            color: #6c757d;-->
+<!--            font-size: 0.9rem;-->
+<!--        }-->
 
-        .payment-logo {
-            width: 120px;
-            margin-bottom: 20px;
-        }
+<!--        .payment-logo {-->
+<!--            width: 120px;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+<!--        .form-group {-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark-color);
-        }
+<!--        .form-group label {-->
+<!--            display: block;-->
+<!--            margin-bottom: 8px;-->
+<!--            font-weight: 500;-->
+<!--            color: var(&#45;&#45;dark-color);-->
+<!--        }-->
 
-        .input-field {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ced4da;
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            transition: var(--transition);
-        }
+<!--        .input-field {-->
+<!--            width: 100%;-->
+<!--            padding: 12px 15px;-->
+<!--            border: 1px solid #ced4da;-->
+<!--            border-radius: var(&#45;&#45;border-radius);-->
+<!--            font-size: 16px;-->
+<!--            transition: var(&#45;&#45;transition);-->
+<!--        }-->
 
-        .input-field:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 156, 222, 0.25);
-        }
+<!--        .input-field:focus {-->
+<!--            border-color: var(&#45;&#45;secondary-color);-->
+<!--            outline: none;-->
+<!--            box-shadow: 0 0 0 3px rgba(0, 156, 222, 0.25);-->
+<!--        }-->
 
-        .input-with-icon {
-            position: relative;
-        }
+<!--        .input-with-icon {-->
+<!--            position: relative;-->
+<!--        }-->
 
-        .input-with-icon i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6c757d;
-        }
+<!--        .input-with-icon i {-->
+<!--            position: absolute;-->
+<!--            left: 15px;-->
+<!--            top: 50%;-->
+<!--            transform: translateY(-50%);-->
+<!--            color: #6c757d;-->
+<!--        }-->
 
-        .input-with-icon input {
-            padding-left: 40px;
-        }
+<!--        .input-with-icon input {-->
+<!--            padding-left: 40px;-->
+<!--        }-->
 
-        .btn {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: var(--transition);
-            width: 100%;
-            text-align: center;
-        }
+<!--        .btn {-->
+<!--            display: inline-block;-->
+<!--            background: var(&#45;&#45;primary-color);-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            padding: 12px 25px;-->
+<!--            border-radius: var(&#45;&#45;border-radius);-->
+<!--            cursor: pointer;-->
+<!--            font-size: 16px;-->
+<!--            font-weight: 500;-->
+<!--            transition: var(&#45;&#45;transition);-->
+<!--            width: 100%;-->
+<!--            text-align: center;-->
+<!--        }-->
 
-        .btn:hover {
-            background: #002366;
-            transform: translateY(-2px);
-        }
+<!--        .btn:hover {-->
+<!--            background: #002366;-->
+<!--            transform: translateY(-2px);-->
+<!--        }-->
 
-        .btn-paypal {
-            background: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+<!--        .btn-paypal {-->
+<!--            background: var(&#45;&#45;primary-color);-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            gap: 10px;-->
+<!--        }-->
 
-        .btn-paypal:hover {
-            background: #002366;
-        }
+<!--        .btn-paypal:hover {-->
+<!--            background: #002366;-->
+<!--        }-->
 
-        .btn-paypal i {
-            font-size: 1.5rem;
-        }
+<!--        .btn-paypal i {-->
+<!--            font-size: 1.5rem;-->
+<!--        }-->
 
-        .payment-security {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            color: #6c757d;
-            font-size: 0.85rem;
-        }
+<!--        .payment-security {-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            gap: 10px;-->
+<!--            margin-top: 20px;-->
+<!--            color: #6c757d;-->
+<!--            font-size: 0.85rem;-->
+<!--        }-->
 
-        .payment-security i {
-            color: var(--success-color);
-        }
+<!--        .payment-security i {-->
+<!--            color: var(&#45;&#45;success-color);-->
+<!--        }-->
 
-        #status {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: var(--border-radius);
-            text-align: center;
-            display: none;
-        }
+<!--        #status {-->
+<!--            margin-top: 20px;-->
+<!--            padding: 12px;-->
+<!--            border-radius: var(&#45;&#45;border-radius);-->
+<!--            text-align: center;-->
+<!--            display: none;-->
+<!--        }-->
 
-        .status-processing {
-            background-color: #fff3cd;
-            color: #856404;
-        }
+<!--        .status-processing {-->
+<!--            background-color: #fff3cd;-->
+<!--            color: #856404;-->
+<!--        }-->
 
-        .status-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
+<!--        .status-success {-->
+<!--            background-color: #d4edda;-->
+<!--            color: #155724;-->
+<!--        }-->
 
-        .status-error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
+<!--        .status-error {-->
+<!--            background-color: #f8d7da;-->
+<!--            color: #721c24;-->
+<!--        }-->
 
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #6c757d;
-            font-size: 0.9rem;
-            padding: 20px 0;
-            border-top: 1px solid #e9ecef;
-        }
+<!--        footer {-->
+<!--            text-align: center;-->
+<!--            margin-top: 40px;-->
+<!--            color: #6c757d;-->
+<!--            font-size: 0.9rem;-->
+<!--            padding: 20px 0;-->
+<!--            border-top: 1px solid #e9ecef;-->
+<!--        }-->
 
-        .loading-spinner {
-            display: none;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
+<!--        .loading-spinner {-->
+<!--            display: none;-->
+<!--            width: 24px;-->
+<!--            height: 24px;-->
+<!--            border: 3px solid rgba(255, 255, 255, 0.3);-->
+<!--            border-radius: 50%;-->
+<!--            border-top-color: white;-->
+<!--            animation: spin 1s ease-in-out infinite;-->
+<!--        }-->
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+<!--        @keyframes spin {-->
+<!--            to { transform: rotate(360deg); }-->
+<!--        }-->
 
-        .amount-container {
-            position: relative;
-        }
+<!--        .amount-container {-->
+<!--            position: relative;-->
+<!--        }-->
 
-        .currency-symbol {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-weight: bold;
-            color: var(--dark-color);
-        }
+<!--        .currency-symbol {-->
+<!--            position: absolute;-->
+<!--            left: 15px;-->
+<!--            top: 50%;-->
+<!--            transform: translateY(-50%);-->
+<!--            font-weight: bold;-->
+<!--            color: var(&#45;&#45;dark-color);-->
+<!--        }-->
 
-        /* Responsive adjustments */
-        @media (max-width: 576px) {
-            .container {
-                margin: 20px auto;
-                padding: 0 15px;
-            }
+<!--        /* Responsive adjustments */-->
+<!--        @media (max-width: 576px) {-->
+<!--            .container {-->
+<!--                margin: 20px auto;-->
+<!--                padding: 0 15px;-->
+<!--            }-->
 
-            .payment-card {
-                padding: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="payment-card">
-        <div class="payment-header">
-            <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal Logo" class="payment-logo">
-            <h2>Secure Payment</h2>
-            <p>Complete your purchase quickly and securely with PayPal</p>
-        </div>
+<!--            .payment-card {-->
+<!--                padding: 20px;-->
+<!--            }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <div class="payment-card">-->
+<!--        <div class="payment-header">-->
+<!--            <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal Logo" class="payment-logo">-->
+<!--            <h2>Secure Payment</h2>-->
+<!--            <p>Complete your purchase quickly and securely with PayPal</p>-->
+<!--        </div>-->
 
-        <div class="form-group">
-            <label for="amount">Payment Amount</label>
-            <div class="amount-container">
-                <span class="currency-symbol">$</span>
-                <input type="number" id="amount" class="input-field" min="1" step="0.01" placeholder="0.00" style="padding-left: 30px;">
-            </div>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <label for="amount">Payment Amount</label>-->
+<!--            <div class="amount-container">-->
+<!--                <span class="currency-symbol">$</span>-->
+<!--                <input type="number" id="amount" class="input-field" min="1" step="0.01" placeholder="0.00" style="padding-left: 30px;">-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <button id="payButton" class="btn btn-paypal" onclick="makePayment()">
-            <i class="fab fa-paypal"></i>
-            <span>Pay with PayPal</span>
-            <div id="loadingSpinner" class="loading-spinner"></div>
-        </button>
+<!--        <button id="payButton" class="btn btn-paypal" onclick="makePayment()">-->
+<!--            <i class="fab fa-paypal"></i>-->
+<!--            <span>Pay with PayPal</span>-->
+<!--            <div id="loadingSpinner" class="loading-spinner"></div>-->
+<!--        </button>-->
 
-        <div class="payment-security">
-            <i class="fas fa-lock"></i>
-            <span>Your payment is secured with PayPal</span>
-        </div>
+<!--        <div class="payment-security">-->
+<!--            <i class="fas fa-lock"></i>-->
+<!--            <span>Your payment is secured with PayPal</span>-->
+<!--        </div>-->
 
-        <div id="status"></div>
-    </div>
-</div>
+<!--        <div id="status"></div>-->
+<!--    </div>-->
+<!--</div>-->
 
-<footer>
-    Developed by Albert Nangara
-</footer>
+<!--<footer>-->
+<!--    Developed by Albert Nangara-->
+<!--</footer>-->
 
-<script>
-    async function makePayment() {
-        const amount = document.getElementById("amount").value;
-        const payButton = document.getElementById("payButton");
-        const loadingSpinner = document.getElementById("loadingSpinner");
-        const statusElement = document.getElementById("status");
+<!--<script>-->
+<!--    async function makePayment() {-->
+<!--        const amount = document.getElementById("amount").value;-->
+<!--        const payButton = document.getElementById("payButton");-->
+<!--        const loadingSpinner = document.getElementById("loadingSpinner");-->
+<!--        const statusElement = document.getElementById("status");-->
 
-        // Validate amount
-        if (!amount || amount <= 0) {
-            statusElement.innerText = "Please enter a valid amount greater than 0.";
-            statusElement.className = "status-error";
-            statusElement.style.display = "block";
-            return;
-        }
+<!--        // Validate amount-->
+<!--        if (!amount || amount <= 0) {-->
+<!--            statusElement.innerText = "Please enter a valid amount greater than 0.";-->
+<!--            statusElement.className = "status-error";-->
+<!--            statusElement.style.display = "block";-->
+<!--            return;-->
+<!--        }-->
 
-        // Show loading state
-        payButton.disabled = true;
-        payButton.querySelector("span").textContent = "Processing...";
-        loadingSpinner.style.display = "block";
+<!--        // Show loading state-->
+<!--        payButton.disabled = true;-->
+<!--        payButton.querySelector("span").textContent = "Processing...";-->
+<!--        loadingSpinner.style.display = "block";-->
 
-        statusElement.innerText = "Connecting to PayPal...";
-        statusElement.className = "status-processing";
-        statusElement.style.display = "block";
+<!--        statusElement.innerText = "Connecting to PayPal...";-->
+<!--        statusElement.className = "status-processing";-->
+<!--        statusElement.style.display = "block";-->
 
-        try {
-            let response = await fetch(`http://localhost:8080/api/v1/paypal/pay?amount=${amount}`, {
-                method: "POST"
-            });
+<!--        try {-->
+<!--            let response = await fetch(`http://localhost:8080/api/v1/paypal/pay?amount=${amount}`, {-->
+<!--                method: "POST"-->
+<!--            });-->
 
-            let result = await response.text();
+<!--            let result = await response.text();-->
 
-            if (result.includes("Redirect to:")) {
-                let url = result.replace("Redirect to: ", "").trim();
-                statusElement.innerText = "Redirecting to PayPal...";
-                setTimeout(() => {
-                    window.location.href = url; // Redirect to PayPal
-                }, 1000);
-            } else {
-                statusElement.innerText = "Payment initiation failed. Please try again.";
-                statusElement.className = "status-error";
-                resetButtonState();
-            }
+<!--            if (result.includes("Redirect to:")) {-->
+<!--                let url = result.replace("Redirect to: ", "").trim();-->
+<!--                statusElement.innerText = "Redirecting to PayPal...";-->
+<!--                setTimeout(() => {-->
+<!--                    window.location.href = url; // Redirect to PayPal-->
+<!--                }, 1000);-->
+<!--            } else {-->
+<!--                statusElement.innerText = "Payment initiation failed. Please try again.";-->
+<!--                statusElement.className = "status-error";-->
+<!--                resetButtonState();-->
+<!--            }-->
 
-        } catch (error) {
-            console.error("Error:", error);
-            statusElement.innerText = "Payment request failed. Please check your connection and try again.";
-            statusElement.className = "status-error";
-            resetButtonState();
-        }
+<!--        } catch (error) {-->
+<!--            console.error("Error:", error);-->
+<!--            statusElement.innerText = "Payment request failed. Please check your connection and try again.";-->
+<!--            statusElement.className = "status-error";-->
+<!--            resetButtonState();-->
+<!--        }-->
 
-        function resetButtonState() {
-            payButton.disabled = false;
-            payButton.querySelector("span").textContent = "Pay with PayPal";
-            loadingSpinner.style.display = "none";
-        }
-    }
-</script>
-</body>
-</html>
+<!--        function resetButtonState() {-->
+<!--            payButton.disabled = false;-->
+<!--            payButton.querySelector("span").textContent = "Pay with PayPal";-->
+<!--            loadingSpinner.style.display = "none";-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
